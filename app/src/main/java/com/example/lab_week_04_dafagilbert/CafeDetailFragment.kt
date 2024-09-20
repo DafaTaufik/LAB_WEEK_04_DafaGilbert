@@ -7,35 +7,28 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val TAB_CONTENT = "TAB_CONTENT"
+private const val ARG_DESC = "desc"
+
 class CafeDetailFragment : Fragment() {
-    private var content: String? = null
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            content = it.getString(TAB_CONTENT)
+
+    companion object {
+        fun newInstance(description: String): CafeDetailFragment {
+            val fragment = CafeDetailFragment()
+            val args = Bundle()
+            args.putString(ARG_DESC, description)
+            fragment.arguments = args
+            return fragment
         }
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-// Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cafe_detail, container, false)
-    }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        view.findViewById<TextView>(R.id.content_description)
-            ?.text = content
-    }
-    companion object {
-        fun newInstance(content: String) =
-            CafeDetailFragment().apply {
-                arguments = Bundle().apply {
-                    putString(TAB_CONTENT, content)
-                }
-            }
+        val view = inflater.inflate(R.layout.fragment_cafe_detail, container, false)
+        val description = arguments?.getString(ARG_DESC) ?: ""
+        val textView = view.findViewById<TextView>(R.id.content_description)
+        textView.text = description
+        return view
     }
 }
